@@ -1,0 +1,29 @@
+fastlane_version "1.94.0"
+
+default_platform :ios
+
+platform :ios do
+lane :buildbla do
+    sh "pwd"
+    cocoapods(use_bundle_exec: true)
+    carthage(platform: "iOS")
+    version = ENV['BUILDBEN_VERSION_NAME']
+    build = ENV['BUILDBEN_BUILD_NUMBER']
+    match(git_url: "https://github.com/Barmaglot123/fastlane_certs.git",
+          app_identifier: "com.kilograpp.mattermost")
+    increment_version_number(version_number: version)
+    increment_build_number(build_number: build)
+    gym
+ end
+
+ lane :bla do 
+    version = ENV['BUILDBEN_VERSION_NAME']
+    build = ENV['BUILDBEN_BUILD_NUMBER']    
+    increment_version_number(version_number: version)
+    increment_build_number(build_number: build)
+    gym(
+       workspace: "Mattermost.xcworkspace"
+    )
+ end
+
+end
